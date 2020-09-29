@@ -1,7 +1,7 @@
-import { store } from 'quasar/wrappers'
-import Vuex from 'vuex'
+import { store } from "quasar/wrappers";
+import Vuex from "vuex";
 
-// import example from './module-example';
+import tasks from "./store-tasks";
 // import { ExampleStateInterface } from './module-example/state';
 
 /*
@@ -16,18 +16,18 @@ export interface StateInterface {
   example: unknown;
 }
 
-export default store(function ({ Vue }) {
-  Vue.use(Vuex)
+export default store(function({ Vue }) {
+  Vue.use(Vuex);
 
   const Store = new Vuex.Store<StateInterface>({
     modules: {
-      // example
+      tasks
     },
 
     // enable strict mode (adds overhead!)
     // for dev mode only
     strict: !!process.env.DEV
-  })
+  });
 
-  return Store
-})
+  return Store;
+});

@@ -2,7 +2,7 @@
   "name": "todoplanner",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "productName": "Super Todo List",
   "author": "zbj830130 <zbj830130@hotmail.com>",
   "private": true,
   "scripts": {

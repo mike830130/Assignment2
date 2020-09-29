@@ -1,49 +1,52 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page class="q-pa-md">
+    <q-list bordered separator v-if="Object.keys(tasks).length">
+      <task
+        v-for="(task, key) in tasks"
+        :key="key"
+        :task="task"
+        :id="key"
+      ></task>
+    </q-list>
+
+    <div class="absolute-bottom text-center q-mb-lg">
+      <q-btn
+        round
+        color="primary"
+        size="24px"
+        icon="add"
+        @click="showAddTask = true"
+      />
+    </div>
+
+    <q-dialog v-model="showAddTask">
+      <addtask @close="showAddTask = false" :taskType="taskType" :taskKey="taskKey"/>
+    </q-dialog>
   </q-page>
 </template>
 
 <script lang="ts">
-import { Todo, Meta } from 'components/models'
-import ExampleComponent from 'components/CompositionComponent.vue'
-import { defineComponent, ref } from '@vue/composition-api'
-
-export default defineComponent({
-  name: 'PageIndex',
-  components: { ExampleComponent },
-  setup () {
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1'
-      },
-      {
-        id: 2,
-        content: 'ct2'
-      },
-      {
-        id: 3,
-        content: 'ct3'
-      },
-      {
-        id: 4,
-        content: 'ct4'
-      },
-      {
-        id: 5,
-        content: 'ct5'
-      }
-    ])
-    const meta = ref<Meta>({
-      totalCount: 1200
-    })
-    return { todos, meta }
+export default {
+  props: ['taskType', 'taskKey'],
+  data () {
+    return {
+      showAddTask: false
+    }
+  },
+  computed: {
+    tasks() {
+      return this.$store.getters["tasks/getTask"](this.taskType, this.taskKey);
+    }
+  },
+  components: {
+    task: require("components/Tasks/tasks.vue").default,
+    addtask: require("components/Tasks/Models/AddTask.vue").default
   }
-})
+};
 </script>
+
+<style>
+.text-strickethrough {
+  text-decoration: line-through;
+}
+</style>
